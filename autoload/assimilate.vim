@@ -19,6 +19,7 @@ endfunction
 
 function! assimilate#find_in_folder(base, search_path) abort
     let l:path_qualifier = './'
+    " check if path is absolute
     if a:search_path[0] ==# '/'
         let l:path_qualifier = ''
     endif
@@ -30,18 +31,12 @@ function! assimilate#find_in_folder(base, search_path) abort
     if ! s:keep_path
         call map( l:files, { k, v -> v[strlen(a:search_path . '/'):] } )
     endif
+    if ! s:keep_suffixes
+        call map( l:files, { k, v -> fnamemodify(v, ':r') } )
+    endif
 
-    let l:matches = []
-    for l:match in l:files
-        " let l:match = l:match[strlen(a:search_path . '/'):]
-        if ! s:keep_suffixes
-            let l:match = fnamemodify(l:match, ':r')
-        endif
-        if l:match =~ l:trimmed
-            call add(l:matches, l:match)
-        endif
-    endfor
-    return l:matches
+    call filter( l:files, { k, v -> v =~? l:trimmed } )
+    return l:files
 endfunction
 
 function! assimilate#findstart()
