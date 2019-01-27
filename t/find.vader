@@ -7,3 +7,14 @@ Given (normal file path):
 Execute (test start):
   normal $
   AssertEqual assimilate#findstart(), 2
+
+Execute (test suffix find):
+  AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate.vim'
+
+Execute (test qualified path):
+  call assimilate#strip_suffixes()
+  AssertEqual assimilate#find_in_folder( 'fstab', '/etc' )[0], 'fstab'
+
+Execute (test suffix strip find):
+  call assimilate#strip_suffixes()
+  AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate'
