@@ -2,38 +2,41 @@
 function! assimilate#findstart()
     " locate the start of the word
     let line = getline('.')
-    echom 'line ' . line
     let start = col('.') - 1
-    " echom 'start ' . start
-    while start > 0 && line[start - 1] =~ '\f'
+    while start > 0 && line[start - 1] =~# '\f'
         let start -= 1
     endwhile
-    echom 'start is ' . start
     return start
 endfunction
 
+function! assimilate#find_in_folder(base, folder) abort
+    let l:path_qualifier = './'
+    if a:folder[0] ==# '/'
+        let l:path_qualifier = ''
+    endif
+    " trim leading spaces from path
+    let l:trimmed = matchstr(a:base, '\S*$')
+    let l:matches = []
+    let l:files = expand(l:path_qualifier . a:folder . '/**', 1, 1)
+    for l:match in l:files
+        " trim leading slash (match on folder path
+        let l:match = matchstr(l:match, a:folder . '/.*')
+        " trim folder from path
+        let l:match = l:match[strlen(a:folder . '/'):]
+        " let l:match = fnamemodify(l:match, ':r')
+        if l:match =~ l:trimmed
+            call add(l:matches, l:match)
+        endif
+    endfor
+    return l:matches
+endfunction
+
+let assimilate#testvar = 'hi'
 function! assimilate#find_include(findstart, base, folder)
     if a:findstart
         return assimilate#findstart()
     else
-        " find files matching with "a:base"
-        " echom 'a:base [' . a:base . ']'
-        let l:trimmed = matchstr(a:base, '\S*$')
-        let res = []
-        let files = expand("./" . a:folder . "/**", 1, 1)
-        for f in files
-            " let m = matchstr(f, '[^\(./' . a:folder . '/\)].*\.')
-            let m = matchstr(f, a:folder . '/.*')
-            let m = m[strlen(a:folder . '/'):]
-            let m = fnamemodify(m, ":r")
-            " echom m . ' =~ ^' . a:base
-            " if m =~ '^' . a:base
-            if m =~ l:trimmed
-                " echom 'adding ' . m
-                call add(res, m)
-            endif
-        endfor
-        return res
+        return assimilate#find_in_folder(a:base, a:folder)
     endif
 endfunction
 
