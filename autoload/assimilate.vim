@@ -9,8 +9,8 @@ function! assimilate#keep_suffixes() abort
 endfunction
 
 " control include_path inclusion
-let s:keep_path = 1
-function! assimilate#strip_include_path() abort
+let s:keep_path = 0
+function! assimilate#strip_path() abort
     let s:keep_path = 0
 endfunction
 function! assimilate#keep_path() abort

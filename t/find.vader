@@ -1,8 +1,9 @@
 Given (normal file path):
   } /this/is
 
-" Do (move to end):
-"   $
+Before (set uniform options):
+  call assimilate#strip_suffixes()
+  call assimilate#strip_path()
 
 Execute (test start):
   normal $
@@ -13,9 +14,11 @@ Execute (test suffix find):
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate.vim'
 
 Execute (test qualified path):
-  call assimilate#strip_suffixes()
-  AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'vm86'
+  AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'asm/vm86'
 
 Execute (test suffix strip find):
-  call assimilate#strip_suffixes()
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate'
+
+Execute (test keep path):
+  call assimilate#keep_path()
+  AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'autoload/assimilate'
