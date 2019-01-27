@@ -12,7 +12,9 @@ The basic use case:
     endfunction
     set completefunc=CustomComplete
 
-This will map `<C-X><C-U>` to 1. search `include/path` 2. return matches on the
+This will map `<C-X><C-U>` to 
+1. search `include/path` 
+2. return matches on the
 string prior to cursor *anywhere* in the resulting string. This is not how
 vim's file-path-building `<C-X><C-F>` behaves which builds path's from the base
 down. Instead this completion pulls back a smaller set of results, and can key
