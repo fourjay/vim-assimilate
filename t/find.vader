@@ -9,11 +9,12 @@ Execute (test start):
   AssertEqual assimilate#findstart(), 2
 
 Execute (test suffix find):
+  call assimilate#keep_suffixes()
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate.vim'
 
 Execute (test qualified path):
   call assimilate#strip_suffixes()
-  AssertEqual assimilate#find_in_folder( 'fstab', '/etc' )[0], 'fstab'
+  AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'vm86'
 
 Execute (test suffix strip find):
   call assimilate#strip_suffixes()
