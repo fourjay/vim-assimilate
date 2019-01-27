@@ -1,0 +1,65 @@
+*assimilate* include oriented file completion              *assimilate.txt*
+
+title
+
+==============================================================================
+CONTENTS                                           *assimilate-contents*
+
+   1. INTRODUCTION                                      |assimilate-intro|
+   2. COMMANDS                                       |assimilate-commands|
+   2. CONFIGURATION                             |assimilate-configuration|
+
+==============================================================================
+1. INTRODUCTION                                           *assimilate-intro*
+
+Including a file by some partial path specification is a common need.
+Sometimes there's a known path that may not reflect vim's editing path.
+This set of autoload commands exists to make it easy to find and autocomplete
+such paths. It's one function that's meant to be used to create a custom
+*completefunc*
+
+This is not a path builder, as vim's insert mode file completion
+*i_CTRL-X_CTRL-F* Instead the file list is filtered on the completefunc base.
+This fit's my use case better (and is easier to implement). Most often I have
+a specific file name in mind, and the relevant name is not in the top level.
+
+==============================================================================
+2. COMMANDS                                            *assimilate-commands*
+
+assimilate#find_include(findstart, base, search_path) *assimilate#find_include*
+
+This is a basic simple use case function to create a simple include path
+completefunc for a project environment or a filetype. A sample setup
+
+>  function! CustomComplete(findstart base)
+>    return assimilate#find_include( a:findstart, a:base, 'include/path' )
+>  endfunction
+>  set completefunc=CustomComplete
+>
+the path argument can be relative (no leading slash) or absolute (leading
+slash).
+
+If multiple include paths are needed use 
+*assimilate#find_in_folder()*
+This is the second call of the completefunc, and the main course of
+functionality. It takes a base and a search path and returns a list. It's easy
+enough to combine the resulting lists from two calls with two (or more) paths.
+Use the existing find_include autoload as a guide.
+
+==============================================================================
+3. CONFIGURATION                                  *assimilate-configuration*
+
+configuration is by autoload functions that set internal values
+
+
+*assimilate#strip_path()* (default)
+*assimilate#keep_path()*
+
+Controls whether the search path is included in the returned results.
+My needs revolve around no-standard paths, strip_path is the default.
+Paths beneath the search path will
+
+*assimilate#strip_suffixes()*
+*assimilate#keep_suffixes()*
+
+Control whether file suffixes are returned.
