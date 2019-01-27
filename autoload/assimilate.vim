@@ -16,7 +16,17 @@ endfunction
 function! assimilate#keep_path() abort
     let s:keep_path = 1
 endfunction
+"
+" control all path strip
+let s:strip_all_path = 0
+function! assimilate#strip_all_path() abort
+    let s:strip_all_path = 1
+endfunction
+function! assimilate#allow_path() abort
+    let s:strip_all_path = 0
+endfunction
 
+" = MAIN FILE SEARCH ===========================================================
 function! assimilate#find_in_folder(base, search_path) abort
     let l:path_qualifier = './'
     " check if path is absolute
@@ -33,6 +43,9 @@ function! assimilate#find_in_folder(base, search_path) abort
     endif
     if ! s:keep_suffixes
         call map( l:files, { k, v -> fnamemodify(v, ':r') } )
+    endif
+    if s:strip_all_path
+        call map(l:files, { k, v -> substitute( v, '^[^/]*[/]*', '', '') } )
     endif
 
     call filter( l:files, { k, v -> v =~? l:trimmed } )

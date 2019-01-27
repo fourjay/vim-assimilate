@@ -4,6 +4,7 @@ Given (normal file path):
 Before (set uniform options):
   call assimilate#strip_suffixes()
   call assimilate#strip_path()
+  call assimilate#allow_path()
 
 Execute (test start):
   normal $
@@ -22,3 +23,7 @@ Execute (test suffix strip find):
 Execute (test keep path):
   call assimilate#keep_path()
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'autoload/assimilate'
+
+Execute (test complete path strip):
+  call assimilate#strip_all_path()
+  AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'vm86'
