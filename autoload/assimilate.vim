@@ -14,6 +14,9 @@ let s:keep_suffixes = 1
 function! assimilate#strip_suffixes() abort
     let s:keep_suffixes = 0
 endfunction
+function! assimilate#keep_suffixes() abort
+    let s:keep_suffixes = 1
+endfunction
 
 function! assimilate#find_in_folder(base, search_path) abort
     let l:path_qualifier = './'
@@ -23,7 +26,7 @@ function! assimilate#find_in_folder(base, search_path) abort
     " trim leading spaces from path
     let l:trimmed = matchstr(a:base, '\S*$')
     let l:matches = []
-    let l:files = expand(l:path_qualifier . a:search_path . '/**', 1, 1)
+    let l:files = glob(l:path_qualifier . a:search_path . '/**', 1, 1)
     for l:match in l:files
         " trim leading slash (by match on search_path)
         let l:match = matchstr(l:match, a:search_path . '/.*')
