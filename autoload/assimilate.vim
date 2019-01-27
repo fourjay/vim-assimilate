@@ -9,6 +9,12 @@ function! assimilate#findstart()
     return start
 endfunction
 
+" control suffix stripping behavior
+let s:keep_suffixes = 1
+function! assimilate#strip_suffixes() abort
+    let s:keep_suffixes = 0
+endfunction
+
 function! assimilate#find_in_folder(base, folder) abort
     let l:path_qualifier = './'
     if a:folder[0] ==# '/'
@@ -23,7 +29,9 @@ function! assimilate#find_in_folder(base, folder) abort
         let l:match = matchstr(l:match, a:folder . '/.*')
         " trim folder from path
         let l:match = l:match[strlen(a:folder . '/'):]
-        " let l:match = fnamemodify(l:match, ':r')
+        if ! s:keep_suffixes
+            let l:match = fnamemodify(l:match, ':r')
+        endif
         if l:match =~ l:trimmed
             call add(l:matches, l:match)
         endif
@@ -31,7 +39,6 @@ function! assimilate#find_in_folder(base, folder) abort
     return l:matches
 endfunction
 
-let assimilate#testvar = 'hi'
 function! assimilate#find_include(findstart, base, folder)
     if a:findstart
         return assimilate#findstart()
