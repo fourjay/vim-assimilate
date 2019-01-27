@@ -1,0 +1,9 @@
+Given (normal file path):
+  } /this/is
+
+" Do (move to end):
+"   $
+
+Execute (test start):
+  normal $
+  AssertEqual assimilate#findstart(), 2
