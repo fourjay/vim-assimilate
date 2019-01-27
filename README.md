@@ -32,5 +32,6 @@ who replied in a Reddit thread https://www.reddit.com/r/vim/comments/9bybpz/cust
 I've generalized his code and modified the approach (use glob is faster then
 expand and likewise map is faster then for loops).
 
-Ingo Karkat has done much with completefunc, for example https://github.com/inkarkat/vim-CompleteHelper
+Ingo Karkat has done much with completefunc (and much else) for example 
+https://github.com/inkarkat/vim-CompleteHelper
 But my use case here seems to have escaped his notice.
