@@ -1,4 +1,4 @@
-*assimilate* include oriented file completion              *assimilate.txt*
+*vim-assimilate* include oriented file completion              *vim-assimilate.txt*
 
 title
 
@@ -30,11 +30,11 @@ assimilate#find_include(findstart, base, search_path) *assimilate#find_include*
 
 This is a basic simple use case function to create a simple include path
 completefunc for a project environment or a filetype. A sample setup
-
->  function! CustomComplete(findstart base)
->    return assimilate#find_include( a:findstart, a:base, 'include/path' )
->  endfunction
->  set completefunc=CustomComplete
+<
+   function! CustomComplete(findstart base)
+     return assimilate#find_include( a:findstart, a:base, 'include/path' )
+   endfunction
+   set completefunc=CustomComplete
 >
 the path argument can be relative (no leading slash) or absolute (leading
 slash).
