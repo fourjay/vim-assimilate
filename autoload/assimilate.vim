@@ -1,31 +1,11 @@
 " = FINDPATH BEAHAVIOR ======================================================
-" control suffix stripping behavior
-let s:keep_suffixes = 1
-function! assimilate#strip_suffixes() abort
-    let s:keep_suffixes = 0
+function! assimilate#get_config(key)
+    if exists('b:assimilate_settings')
+        return b:assimilate_settings[a:key]
+    else
+        return g:assimilate_settings[a:key]
+    endif
 endfunction
-function! assimilate#keep_suffixes() abort
-    let s:keep_suffixes = 1
-endfunction
-
-" control include_path inclusion
-let s:keep_path = 0
-function! assimilate#strip_path() abort
-    let s:keep_path = 0
-endfunction
-function! assimilate#keep_path() abort
-    let s:keep_path = 1
-endfunction
-"
-" control all path strip
-let s:strip_all_path = 0
-function! assimilate#strip_all_path() abort
-    let s:strip_all_path = 1
-endfunction
-function! assimilate#allow_path() abort
-    let s:strip_all_path = 0
-endfunction
-
 " = MAIN FILE SEARCH ===========================================================
 function! assimilate#find_in_folder(base, search_path) abort
     let l:path_qualifier = './'
@@ -38,13 +18,13 @@ function! assimilate#find_in_folder(base, search_path) abort
     let l:files = glob(l:path_qualifier . a:search_path . '/**', 1, 1)
     " trim potential ldeading noise, such as './'
     call map( l:files, { k, v -> matchstr( v, a:search_path . '.*' ) } )
-    if ! s:keep_path
+    if assimilate#get_config('trim_search_path')
         call map( l:files, { k, v -> v[strlen(a:search_path . '/'):] } )
     endif
-    if ! s:keep_suffixes
+    if ! assimilate#get_config('keep_suffixes')
         call map( l:files, { k, v -> fnamemodify(v, ':r') } )
     endif
-    if s:strip_all_path
+    if assimilate#get_config('trim_whole_path')
         call map(l:files, { k, v -> substitute( v, '^[^/]*[/]*', '', '') } )
     endif
 

@@ -11,7 +11,8 @@ set compatible&vim
 " manage settings
 let s:defaults = {
             \ 'keep_whole_path': 0,
-            \ 'trim_include': 1,
+            \ 'trim_whole_path': 0,
+            \ 'trim_search_path': 1,
             \ 'keep_suffixes': 0
             \ }
 
@@ -29,4 +30,3 @@ endfor
 
 " Return vim to users choice
 let &cpoptions = s:save_cpo
-echo g:assimilate_settings

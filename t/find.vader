@@ -2,28 +2,30 @@ Given (normal file path):
   } /this/is
 
 Before (set uniform options):
-  call assimilate#strip_suffixes()
-  call assimilate#strip_path()
-  call assimilate#allow_path()
+  let g:assimilate_settings.keep_whole_path = 0
+  let g:assimilate_settings.keep_suffixes = 0
+  let g:assimilate_settings.trim_search_path = 1
+  let g:assimilate_settings.trim_whole_path = 0
 
 Execute (test start):
   normal $
   AssertEqual assimilate#findstart(), 2
 
 Execute (test suffix find):
-  call assimilate#keep_suffixes()
+  let g:assimilate_settings.keep_suffixes = 1
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate.vim'
 
 Execute (test qualified path):
   AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'asm/vm86'
 
 Execute (test suffix strip find):
+  let g:assimilate_settings.keep_suffixes = 0
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'assimilate'
 
 Execute (test keep path):
-  call assimilate#keep_path()
+  let g:assimilate_settings.keep_whole_path = 1
   AssertEqual assimilate#find_in_folder( 'as', 'autoload' )[0], 'autoload/assimilate'
 
 Execute (test complete path strip):
-  call assimilate#strip_all_path()
+  let g:assimilate_settings.trim_whole_path = 1
   AssertEqual assimilate#find_in_folder( 'vm86', '/usr/include' )[0], 'vm86'
