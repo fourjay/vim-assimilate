@@ -49,17 +49,16 @@ Use the existing find_include autoload as a guide.
 ==============================================================================
 3. CONFIGURATION                                  *assimilate-configuration*
 
-configuration is by autoload functions that set internal values
+configuration is in an array g:assimilate_settings to override the
+default suffix stripping behavior.
+>
+    let g:assimilate_settings = {}
+    let g:assimilate_settings.keep_suffixes = 1
+<
 
+Current values:
 
-*assimilate#strip_path()* (default)
-*assimilate#keep_path()*
-
-Controls whether the search path is included in the returned results.
-My needs revolve around no-standard paths, strip_path is the default.
-Paths beneath the search path will
-
-*assimilate#strip_suffixes()*
-*assimilate#keep_suffixes()*
-
-Control whether file suffixes are returned.
+keep_whole_path            | do not trim anything in the found path
+trim_search_path (default) | trim off the leading search path
+trim_whole_path            | only return the file name
+keep_suffixes              | keep suffixes
