@@ -18,7 +18,7 @@ function! assimilate#find_in_folder(base, search_path) abort
     let l:files = glob(l:path_qualifier . a:search_path . '/**', 1, 1)
     " trim potential ldeading noise, such as './'
     call map( l:files, { k, v -> matchstr( v, a:search_path . '.*' ) } )
-    if assimilate#get_config('trim_search_path')
+    if assimilate#get_config('trim_search_path') && ! assimilate#get_config('keep_whole_path') 
         call map( l:files, { k, v -> v[strlen(a:search_path . '/'):] } )
     endif
     if ! assimilate#get_config('keep_suffixes')
