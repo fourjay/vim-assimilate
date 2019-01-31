@@ -46,6 +46,15 @@ functionality. It takes a base and a search path and returns a list. It's easy
 enough to combine the resulting lists from two calls with two (or more) paths.
 Use the existing find_include autoload as a guide.
 
+Alternately, *complete()* can be used along with <C-R>= mapping
+
+>
+   function! CustomComplete() abort
+      return assimilate#completer('/usr/include')
+   endfunction
+   imap <C-X><C-I> <C-R>=CustomComplete()<CR>
+<
+
 ==============================================================================
 3. CONFIGURATION                                  *assimilate-configuration*
 
