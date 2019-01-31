@@ -42,6 +42,12 @@ function! assimilate#findstart()
     return start
 endfunction
 
+function! assimilate#get_base()
+    let l:start = assimilate#findstart()
+    let l:end = col('.')
+    return strpart(getline('.'), l:start, l:end - l:start)
+endfunction
+
 function! assimilate#find_include(findstart, base, search_path)
     if a:findstart
         return assimilate#findstart()
