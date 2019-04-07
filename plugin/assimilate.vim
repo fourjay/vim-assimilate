@@ -6,7 +6,7 @@ if exists('did_assimilate')
 endif
 let g:did_assimilate = '1'
 let s:save_cpo = &cpoptions
-set compatible&vim
+set cpoptions&vim
 
 " manage settings
 let s:defaults = {
